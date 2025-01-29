@@ -10,8 +10,8 @@
 # ⏬ Installation & Setup
 1. Clone the Repository
 ```
-git clone https://github.com/yourusername/youtube-mp3-converter.git
-cd youtube-mp3-converter
+git clone https://github.com/AmineZhioua/youtube-to-mp3.git
+cd youtube-to-mp3
 ```
 2. Install Dependencies
 Make sure you have Node.js installed, then run:

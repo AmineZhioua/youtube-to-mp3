@@ -20,8 +20,11 @@ export async function convert(req, res) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    // Use the locally downloaded yt-dlp binary
+    const ytDlpPath = path.join(__dirname, "yt-dlp"); // Ensure correct path
+
     exec(
-      `yt-dlp -x --audio-format mp3 -o "${outputPath}" https://www.youtube.com/watch?v=${videoId}`,
+      `${ytDlpPath} -x --audio-format mp3 -o "${outputPath}" ${url}`,
       (error, stdout, stderr) => {
         if (error) {
           console.error("Error during conversion:", error.message);

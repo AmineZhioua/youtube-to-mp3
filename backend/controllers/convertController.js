@@ -1,7 +1,12 @@
 import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import ytdl from "ytdl-core";
+
+// Define __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function convert(req, res) {
   const { url } = req.body;
@@ -12,16 +17,15 @@ export async function convert(req, res) {
 
   try {
     const videoId = ytdl.getURLVideoID(url);
-
-    const outputDir = "./downloads";
+    const outputDir = path.join(__dirname, "downloads");
     const outputPath = path.join(outputDir, `${videoId}.mp3`);
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    // Use the locally downloaded yt-dlp binary
-    const ytDlpPath = path.join(__dirname, "yt-dlp"); // Ensure correct path
+    // Path to the locally downloaded yt-dlp binary
+    const ytDlpPath = path.join(__dirname, "yt-dlp");
 
     exec(
       `${ytDlpPath} -x --audio-format mp3 -o "${outputPath}" ${url}`,
